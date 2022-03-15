@@ -126,6 +126,9 @@ func newPartitionProducer(client *client, topic string, options *ProducerOptions
 		metrics:          metrics,
 		epoch:            0,
 	}
+	if p.options.DisableBatching {
+		p.batchFlushTicker.Stop()
+	}
 	p.setProducerState(producerInit)
 
 	if options.Schema != nil && options.Schema.GetSchemaInfo() != nil {
@@ -142,7 +145,8 @@ func newPartitionProducer(client *client, topic string, options *ProducerOptions
 	}
 	err := p.grabCnx()
 	if err != nil {
-		logger.WithError(err).Error("Failed to create producer")
+		p.batchFlushTicker.Stop()
+		logger.WithError(err).Error("Failed to create producer at newPartitionProducer")
 		return nil, err
 	}
 
@@ -209,7 +213,7 @@ func (p *partitionProducer) grabCnx() error {
 	}
 	res, err := p.client.rpcClient.Request(lr.LogicalAddr, lr.PhysicalAddr, id, pb.BaseCommand_PRODUCER, cmdProducer)
 	if err != nil {
-		p.log.WithError(err).Error("Failed to create producer")
+		p.log.WithError(err).Error("Failed to create producer at send PRODUCER request")
 		return err
 	}
 
@@ -324,6 +328,7 @@ func (p *partitionProducer) reconnectToBroker() {
 	for maxRetry != 0 {
 		if p.getProducerState() != producerReady {
 			// Producer is already closing
+			p.log.Info("producer state not ready, exit reconnect")
 			return
 		}
 
@@ -337,6 +342,7 @@ func (p *partitionProducer) reconnectToBroker() {
 			p.log.WithField("cnx", p._getConn().ID()).Info("Reconnected producer to broker")
 			return
 		}
+		p.log.WithError(err).Error("Failed to create producer at reconnect")
 		errMsg := err.Error()
 		if strings.Contains(errMsg, errTopicNotFount) {
 			// when topic is deleted, we should give up reconnection.
@@ -352,12 +358,15 @@ func (p *partitionProducer) reconnectToBroker() {
 
 func (p *partitionProducer) runEventsLoop() {
 	go func() {
-		select {
-		case <-p.closeCh:
-			return
-		case <-p.connectClosedCh:
-			p.log.Info("runEventsLoop will reconnect in producer")
-			p.reconnectToBroker()
+		for {
+			select {
+			case <-p.closeCh:
+				p.log.Info("close producer, exit reconnect")
+				return
+			case <-p.connectClosedCh:
+				p.log.Info("runEventsLoop will reconnect in producer")
+				p.reconnectToBroker()
+			}
 		}
 	}()
 
