@@ -75,9 +75,14 @@ func NewDefaultClientCredentialsFlow(options ClientCredentialsFlowOptions) (*Cli
 		return nil, errors.Wrap(err, "could not get client credentials")
 	}
 
-	wellKnownEndpoints, err := GetOIDCWellKnownEndpointsFromIssuerURL(keyFile.IssuerURL)
-	if err != nil {
-		return nil, err
+	// wellKnownEndpoints, err := GetOIDCWellKnownEndpointsFromIssuerURL(keyFile.IssuerURL)
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	wellKnownEndpoints := &OIDCWellKnownEndpoints{
+		TokenEndpoint:         keyFile.IssuerURL,
+		AuthorizationEndpoint: keyFile.IssuerURL,
 	}
 
 	tokenRetriever := NewTokenRetriever(&http.Client{})

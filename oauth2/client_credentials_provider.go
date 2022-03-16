@@ -18,6 +18,7 @@
 package oauth2
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"io/ioutil"
 	"strings"
@@ -56,7 +57,7 @@ func (k *KeyFileProvider) GetClientCredentials() (*KeyFile, error) {
 		filename := strings.TrimPrefix(k.KeyFile, FILE)
 		keyFile, err = ioutil.ReadFile(filename)
 	case strings.HasPrefix(k.KeyFile, "data://"):
-		keyFile = []byte(strings.TrimPrefix(k.KeyFile, DATA))
+		keyFile, err = base64.StdEncoding.DecodeString(strings.TrimPrefix(k.KeyFile, DATA))
 	default:
 		keyFile, err = ioutil.ReadFile(k.KeyFile)
 	}
