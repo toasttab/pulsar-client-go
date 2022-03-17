@@ -322,7 +322,7 @@ func TestOAuth2Auth(t *testing.T) {
 		auth.ConfigParamKeyFile:   kf,
 	}
 
-	oauth := NewAuthenticationOAuth2(params)
+	oauth, err := NewAuthenticationOAuth2(params)
 	client, err := NewClient(ClientOptions{
 		URL:            serviceURL,
 		Authentication: oauth,
@@ -930,7 +930,7 @@ func TestHTTPOAuth2Auth(t *testing.T) {
 		auth.ConfigParamKeyFile:   kf,
 	}
 
-	oauth := NewAuthenticationOAuth2(params)
+	oauth, err := NewAuthenticationOAuth2(params)
 	client, err := NewClient(ClientOptions{
 		URL:            webServiceURL,
 		Authentication: oauth,
@@ -964,7 +964,7 @@ func TestHTTPSOAuth2Auth(t *testing.T) {
 		auth.ConfigParamKeyFile:   kf,
 	}
 
-	oauth := NewAuthenticationOAuth2(params)
+	oauth, err := NewAuthenticationOAuth2(params)
 	client, err := NewClient(ClientOptions{
 		URL:                   webServiceURLTLS,
 		TLSTrustCertsFilePath: caCertsPath,
@@ -999,7 +999,7 @@ func TestHTTPOAuth2AuthFailed(t *testing.T) {
 		auth.ConfigParamAudience:  "audience",
 	}
 
-	oauth := NewAuthenticationOAuth2(params)
+	oauth, err := NewAuthenticationOAuth2(params)
 	client, err := NewClient(ClientOptions{
 		URL:            webServiceURL,
 		Authentication: oauth,
