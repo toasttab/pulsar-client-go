@@ -20,8 +20,8 @@ package crypto
 import (
 	"testing"
 
-	pb "github.com/apache/pulsar-client-go/pulsar/internal/pulsar_proto"
 	"github.com/stretchr/testify/assert"
+	pb "github.com/toasttab/pulsar-client-go/pulsar/internal/pulsar_proto"
 )
 
 func TestGetEncryptionKeys(t *testing.T) {

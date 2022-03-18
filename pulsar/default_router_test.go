@@ -21,8 +21,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/apache/pulsar-client-go/pulsar/internal"
 	"github.com/stretchr/testify/assert"
+	"github.com/toasttab/pulsar-client-go/pulsar/internal"
 )
 
 const oneHourPublishMaxDelay = time.Hour

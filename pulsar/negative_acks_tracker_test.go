@@ -23,8 +23,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/apache/pulsar-client-go/pulsar/log"
 	"github.com/stretchr/testify/assert"
+	"github.com/toasttab/pulsar-client-go/pulsar/log"
 )
 
 const testNackDelay = 300 * time.Millisecond

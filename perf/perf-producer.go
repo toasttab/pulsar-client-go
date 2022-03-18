@@ -28,7 +28,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/toasttab/pulsar-client-go/pulsar"
 )
 
 // ProduceArgs define the parameters required by produce
@@ -146,7 +146,7 @@ func produce(produceArgs *ProduceArgs, stop <-chan struct{}) {
 			return
 		case <-tick.C:
 			messageRate := float64(messagesPublished) / float64(10)
-			log.Infof(`Stats - Publish rate: %6.1f msg/s - %6.1f Mbps - 
+			log.Infof(`Stats - Publish rate: %6.1f msg/s - %6.1f Mbps -
 				Latency ms: 50%% %5.1f -95%% %5.1f - 99%% %5.1f - 99.9%% %5.1f - max %6.1f`,
 				messageRate,
 				messageRate*float64(produceArgs.MessageSize)/1024/1024*8,

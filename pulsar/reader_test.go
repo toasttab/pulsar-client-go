@@ -23,8 +23,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/apache/pulsar-client-go/pulsar/crypto"
 	"github.com/stretchr/testify/assert"
+	"github.com/toasttab/pulsar-client-go/pulsar/crypto"
 )
 
 func TestReaderConfigErrors(t *testing.T) {

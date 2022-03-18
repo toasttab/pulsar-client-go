@@ -23,10 +23,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/apache/pulsar-client-go/pulsar/log"
+	"github.com/toasttab/pulsar-client-go/pulsar/log"
 
-	pb "github.com/apache/pulsar-client-go/pulsar/internal/pulsar_proto"
 	"github.com/gogo/protobuf/proto"
+	pb "github.com/toasttab/pulsar-client-go/pulsar/internal/pulsar_proto"
 )
 
 var (

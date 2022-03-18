@@ -27,12 +27,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/apache/pulsar-client-go/pulsar/internal"
 	"github.com/stretchr/testify/assert"
+	"github.com/toasttab/pulsar-client-go/pulsar/internal"
 
-	"github.com/apache/pulsar-client-go/pulsar/crypto"
-	plog "github.com/apache/pulsar-client-go/pulsar/log"
 	log "github.com/sirupsen/logrus"
+	"github.com/toasttab/pulsar-client-go/pulsar/crypto"
+	plog "github.com/toasttab/pulsar-client-go/pulsar/log"
 )
 
 func TestInvalidURL(t *testing.T) {

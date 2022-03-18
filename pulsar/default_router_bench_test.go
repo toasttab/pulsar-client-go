@@ -21,7 +21,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/apache/pulsar-client-go/pulsar/internal"
+	"github.com/toasttab/pulsar-client-go/pulsar/internal"
 )
 
 var (

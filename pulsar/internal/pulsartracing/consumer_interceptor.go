@@ -20,8 +20,8 @@ package pulsartracing
 import (
 	"context"
 
-	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/opentracing/opentracing-go"
+	"github.com/toasttab/pulsar-client-go/pulsar"
 )
 
 const fromPrefix = "From__"
